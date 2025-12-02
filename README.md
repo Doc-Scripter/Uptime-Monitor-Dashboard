@@ -38,7 +38,11 @@ The project aims to deliver a tool that entrepreneurs, developers, and small bus
 * Real-time UI updates via polling.
 
 ---
+Preview
 
+<img width="1256" height="842" alt="image" src="https://github.com/user-attachments/assets/975c08c2-49ea-4463-92ee-f8dc865074f7" />
+
+---
 ## Tech Stack
 
 ### **Backend – Laravel**
