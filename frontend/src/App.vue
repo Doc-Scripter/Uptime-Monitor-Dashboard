@@ -1,11 +1,11 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import MainLayout from '@/components/layout/MainLayout.vue'
+import { useUiStore } from '@/stores/uiStore'
+
+// Initialize UI store (handles dark mode init)
+const uiStore = useUiStore()
+</script>
 
 <template>
-  <h1>You did it!</h1>
-  <p>
-    Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-    documentation
-  </p>
+  <MainLayout />
 </template>
-
-<style scoped></style>
