@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Uptime Monitor Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#ff8b3d",
+                        "background-light": "#f8f7f5",
+                        "background-dark": "#23170f",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+    </style>
+</head>
+<body class="font-display bg-background-light dark:bg-background-dark">
+<div class="relative flex h-screen w-full flex-row overflow-hidden">
+<!-- SideNavBar -->
+<aside class="flex h-full w-[260px] shrink-0 flex-col bg-[#0B1020] p-4 text-white">
+<div class="flex items-center gap-3 p-3">
+<div class="flex items-center justify-center rounded-full bg-primary/20 size-10">
+<span class="material-symbols-outlined text-primary">show_chart</span>
+</div>
+<h1 class="text-white text-base font-medium leading-normal">Uptime Monitor</h1>
+</div>
+<nav class="flex flex-col gap-2 mt-4 flex-grow">
+<a class="flex items-center gap-3 px-3 py-2 rounded-full bg-primary/20" href="#">
+<span class="material-symbols-outlined text-primary">dashboard</span>
+<p class="text-white text-sm font-medium leading-normal">Dashboard</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-white/70">monitor_heart</span>
+<p class="text-white/70 text-sm font-medium leading-normal">Monitors</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-white/70">history</span>
+<p class="text-white/70 text-sm font-medium leading-normal">Health Logs</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-white/70">public</span>
+<p class="text-white/70 text-sm font-medium leading-normal">Network Intelligence</p>
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-full hover:bg-white/10" href="#">
+<span class="material-symbols-outlined text-white/70">settings</span>
+<p class="text-white/70 text-sm font-medium leading-normal">Settings</p>
+</a>
+</nav>
+<div class="flex flex-col gap-2">
+<p class="px-3 text-xs font-semibold uppercase text-white/50">Quick Filters</p>
+<div class="flex gap-2 p-3 flex-wrap">
+<div class="flex h-8 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-white/10 px-4">
+<p class="text-white text-sm font-medium leading-normal">All</p>
+</div>
+<div class="flex h-8 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-white/10 px-4">
+<p class="text-white text-sm font-medium leading-normal">Up</p>
+</div>
+<div class="flex h-8 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-white/10 px-4">
+<p class="text-white text-sm font-medium leading-normal">Warning</p>
+</div>
+<div class="flex h-8 cursor-pointer items-center justify-center gap-x-2 rounded-full bg-white/10 px-4">
+<p class="text-white text-sm font-medium leading-normal">Down</p>
+</div>
+</div>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="flex h-full flex-1 flex-col overflow-y-auto">
+<!-- TopNavBar -->
+<header class="flex h-[64px] shrink-0 items-center justify-between whitespace-nowrap border-b border-solid border-[#E7DFDA] dark:border-white/10 bg-white dark:bg-[#1C130B] px-6">
+<div class="flex items-center gap-8">
+<div class="flex flex-col">
+<h2 class="text-[#181410] dark:text-white text-lg font-bold leading-tight tracking-[-0.015em]">Overview</h2>
+<p class="text-sm text-gray-500 dark:text-gray-400">Real-time uptime &amp; latency</p>
+</div>
+<div class="hidden md:flex items-center gap-9">
+<button class="flex items-center gap-2 rounded-full bg-background-light dark:bg-background-dark px-3 py-1.5">
+<span class="text-sm font-medium text-[#181410] dark:text-white">Last 7 days</span>
+<span class="material-symbols-outlined text-[#8d715e] dark:text-gray-400 text-base">expand_more</span>
+</button>
+</div>
+</div>
+<div class="flex flex-1 items-center justify-end gap-4">
+<label class="relative flex items-center min-w-40 !h-10 max-w-64">
+<span class="material-symbols-outlined absolute left-3 text-[#8d715e] dark:text-gray-400">search</span>
+<input class="form-input flex w-full min-w-0 flex-1 rounded-full text-[#181410] dark:text-white focus:outline-0 focus:ring-2 focus:ring-primary/50 border-none bg-background-light dark:bg-background-dark h-full placeholder:text-[#8d715e] dark:placeholder:text-gray-400 pl-10 pr-4 text-sm font-normal" placeholder="Search" value=""/>
+</label>
+<button class="flex h-10 w-10 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-background-light dark:bg-background-dark text-[#181410] dark:text-white">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" data-alt="User avatar with an abstract colorful background" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuD2ZQjXng-NrNEEvCLFlvb0sQCjS3l3ZNiZ76-lHVBs53Smm5gC_HYJfAIBm7TQWUr10aBcEqtYULUouPn3p-SeGguWLy-RBZIWlu_YTUn3XnlJ0dAtI3s6LqqS_9P9AvdKdTjSA-3nXHmYUk4eoBuP_0Q6UDckwG3etsTRb0B5AsZ4XFSY79DJhoyQjL-hFs6Lou432jNH5LQwvJ_PwQnip9LrvrSMcjacx2o2Ibw9PVNAHAieizqum5Hv4rrdWzAFSS138f3ybF0");'></div>
+</div>
+</header>
+<!-- Content Area -->
+<div class="flex-1 p-6">
+<div class="grid grid-cols-12 gap-6">
+<!-- Stats Cards -->
+<div class="col-span-12 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+<div class="flex h-[140px] flex-col gap-2 rounded-lg bg-white dark:bg-[#1C130B] p-6 border border-[#e7dfda] dark:border-white/10">
+<p class="text-[#181410] dark:text-white/80 text-base font-medium leading-normal">Overall Uptime (7d)</p>
+<p class="text-[#181410] dark:text-white tracking-tight text-4xl font-bold leading-tight">99.98%</p>
+</div>
+<div class="flex h-[140px] flex-col gap-2 rounded-lg bg-white dark:bg-[#1C130B] p-6 border border-[#e7dfda] dark:border-white/10">
+<p class="text-[#181410] dark:text-white/80 text-base font-medium leading-normal">Average Latency</p>
+<p class="text-[#181410] dark:text-white tracking-tight text-4xl font-bold leading-tight">120ms</p>
+</div>
+<div class="flex h-[140px] flex-col gap-2 rounded-lg bg-white dark:bg-[#1C130B] p-6 border border-[#e7dfda] dark:border-white/10">
+<p class="text-[#181410] dark:text-white/80 text-base font-medium leading-normal">Monitors</p>
+<div class="flex items-end gap-4">
+<p class="text-[#181410] dark:text-white text-2xl font-bold leading-tight"><span class="text-green-500">28</span> Up</p>
+<p class="text-[#181410] dark:text-white text-2xl font-bold leading-tight"><span class="text-yellow-500">2</span> Warn</p>
+<p class="text-[#181410] dark:text-white text-2xl font-bold leading-tight"><span class="text-red-500">1</span> Down</p>
+</div>
+</div>
+<div class="flex h-[140px] flex-col gap-2 rounded-lg bg-white dark:bg-[#1C130B] p-6 border border-[#e7dfda] dark:border-white/10">
+<p class="text-[#181410] dark:text-white/80 text-base font-medium leading-normal">Public IP &amp; Network</p>
+<p class="text-[#181410] dark:text-white tracking-tight text-2xl font-bold leading-tight">192.168.1.1, NY</p>
+</div>
+</div>
+<!-- Monitors Table -->
+<div class="col-span-12 p-6 rounded-lg bg-white dark:bg-[#1C130B] border border-[#e7dfda] dark:border-white/10">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-[#181410] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em]">Monitors</h2>
+<div class="flex items-center gap-4">
+<button class="flex items-center gap-2 rounded-full border border-gray-300 dark:border-white/20 px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-white/80">
+                                    Type: All <span class="material-symbols-outlined text-base">expand_more</span>
+</button>
+<button class="flex items-center justify-center rounded-full h-10 bg-primary text-white gap-2 text-sm font-bold leading-normal min-w-0 px-4">
+<span class="material-symbols-outlined text-base">add</span>Add Monitor
+                                </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left text-sm text-gray-600 dark:text-gray-300">
+<thead class="border-b border-gray-200 dark:border-white/10 text-xs uppercase text-gray-500 dark:text-gray-400">
+<tr>
+<th class="py-3 px-4" scope="col">Status &amp; Name</th>
+<th class="py-3 px-4" scope="col">URL</th>
+<th class="py-3 px-4" scope="col">Current Latency</th>
+<th class="py-3 px-4" scope="col">Uptime (7d)</th>
+<th class="py-3 px-4" scope="col">Last Check</th>
+<th class="py-3 px-4" scope="col">Tags</th>
+</tr>
+</thead>
+<tbody>
+<tr class="border-b border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5">
+<td class="py-3 px-4 font-medium text-gray-900 dark:text-white flex items-center gap-2"><div class="size-2.5 rounded-full bg-green-500"></div>Acme Corp</td>
+<td class="py-3 px-4">acmecorp.com</td>
+<td class="py-3 px-4">88ms</td>
+<td class="py-3 px-4">100%</td>
+<td class="py-3 px-4">30s ago</td>
+<td class="py-3 px-4"><span class="rounded-full bg-blue-100 dark:bg-blue-900/50 text-blue-800 dark:text-blue-300 px-2 py-0.5 text-xs">Production</span></td>
+</tr>
+<tr class="border-b border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5">
+<td class="py-3 px-4 font-medium text-gray-900 dark:text-white flex items-center gap-2"><div class="size-2.5 rounded-full bg-red-500"></div>API Gateway</td>
+<td class="py-3 px-4">api.acmecorp.com</td>
+<td class="py-3 px-4">-</td>
+<td class="py-3 px-4">98.21%</td>
+<td class="py-3 px-4">2m ago</td>
+<td class="py-3 px-4"><span class="rounded-full bg-purple-100 dark:bg-purple-900/50 text-purple-800 dark:text-purple-300 px-2 py-0.5 text-xs">Infra</span></td>
+</tr>
+<tr class="border-b border-gray-200 dark:border-white/10 hover:bg-gray-50 dark:hover:bg-white/5">
+<td class="py-3 px-4 font-medium text-gray-900 dark:text-white flex items-center gap-2"><div class="size-2.5 rounded-full bg-yellow-500"></div>Staging Server</td>
+<td class="py-3 px-4">staging.acmecorp.dev</td>
+<td class="py-3 px-4">450ms</td>
+<td class="py-3 px-4">99.91%</td>
+<td class="py-3 px-4">15s ago</td>
+<td class="py-3 px-4"><span class="rounded-full bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-300 px-2 py-0.5 text-xs">Internal</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<!-- Monitor Details -->
+<div class="col-span-12 lg:col-span-7 p-6 rounded-lg bg-white dark:bg-[#1C130B] border border-[#e7dfda] dark:border-white/10">
+<h2 class="text-[#181410] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em] mb-4">Monitor Details</h2>
+<div class="border-b border-gray-200 dark:border-white/10">
+<nav aria-label="Tabs" class="-mb-px flex space-x-6">
+<a class="border-primary text-primary whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm" href="#">Timeline</a>
+<a class="border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-500 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm" href="#">Latency</a>
+<a class="border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-500 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm" href="#">Health Logs</a>
+<a class="border-transparent text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200 hover:border-gray-300 dark:hover:border-gray-500 whitespace-nowrap py-3 px-1 border-b-2 font-medium text-sm" href="#">Network</a>
+</nav>
+</div>
+<div class="mt-6">
+<div class="bg-center bg-no-repeat aspect-[2/1] bg-contain rounded-md" data-alt="A line graph showing uptime status over time, with green indicating 'up' and red for 'down' periods." style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuANPaRZcO9RjCxhn39zaq7LY07ks7rIf5hhHgShXkd7AB0Yw_-jOfzqA9nESm3jKPjBxKjizZHbtGEVe4942fOR8kThX7d0kOYivdEf_Bi0wlEcmBtdlsZoDVTR6eRSKKGunFp31asLoeJruNhPRXfP1ePnZ4vZS72LHZyblyVJw5L5c1b2j0ugKyzgTv7VutxdCDCdpRb4c-mC9zJ4oOGzIFYUURYJ5G4YdQ2A6KmmC9UwZeBg-6PqQ3LDoreskTCVfQtRf4bdtwQ');"></div>
+</div>
+</div>
+<!-- Recent Health Logs -->
+<div class="col-span-12 lg:col-span-5 p-6 rounded-lg bg-white dark:bg-[#1C130B] border border-[#e7dfda] dark:border-white/10">
+<h2 class="text-[#181410] dark:text-white text-xl font-bold leading-tight tracking-[-0.015em] mb-4">Recent Health Logs</h2>
+<ul class="space-y-4">
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-red-500">error</span>
+<div class="flex-1">
+<p class="text-sm font-medium text-gray-900 dark:text-white">API Gateway is down</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">HTTP 503 error</p>
+</div>
+<p class="text-xs text-gray-400 dark:text-gray-500">2m ago</p>
+</li>
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<div class="flex-1">
+<p class="text-sm font-medium text-gray-900 dark:text-white">API Gateway is back up</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Resolved after 5m</p>
+</div>
+<p class="text-xs text-gray-400 dark:text-gray-500">30s ago</p>
+</li>
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-yellow-500">warning</span>
+<div class="flex-1">
+<p class="text-sm font-medium text-gray-900 dark:text-white">Staging Server latency high</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Response time &gt; 400ms</p>
+</div>
+<p class="text-xs text-gray-400 dark:text-gray-500">10m ago</p>
+</li>
+<li class="flex items-center gap-4">
+<span class="material-symbols-outlined text-green-500">check_circle</span>
+<div class="flex-1">
+<p class="text-sm font-medium text-gray-900 dark:text-white">Staging Server latency normal</p>
+<p class="text-xs text-gray-500 dark:text-gray-400">Response time back to 150ms</p>
+</div>
+<p class="text-xs text-gray-400 dark:text-gray-500">5m ago</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</main>
+</div>
+</body></html>
