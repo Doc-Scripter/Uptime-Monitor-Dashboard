@@ -31,13 +31,13 @@ onMounted(async () => {
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-4">
       <StatsCard
         title="Overall Uptime (7d)"
-        :value="stats?.uptime_percentage ? `${stats.uptime_percentage}%` : '-'"
+        :value="stats?.overall_uptime ? `${stats.overall_uptime}%` : '-'"
         icon="check_circle"
         :loading="isLoading"
       />
       <StatsCard
         title="Average Latency"
-        :value="stats?.avg_latency ? `${stats.avg_latency}ms` : '-'"
+        :value="stats?.average_latency ? `${stats.average_latency}ms` : '-'"
         icon="speed"
         :loading="isLoading"
       />
@@ -47,15 +47,15 @@ onMounted(async () => {
             <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Monitors</p>
             <div class="mt-2 flex items-baseline gap-4">
               <div>
-                <span class="text-2xl font-bold text-green-600 dark:text-green-400">{{ stats?.up_monitors || 0 }}</span>
+                <span class="text-2xl font-bold text-green-600 dark:text-green-400">{{ stats?.monitors_count?.up || 0 }}</span>
                 <span class="text-xs text-gray-500 ml-1">Up</span>
               </div>
               <div>
-                <span class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{{ stats?.warning_monitors || 0 }}</span>
+                <span class="text-2xl font-bold text-yellow-600 dark:text-yellow-400">{{ stats?.monitors_count?.warning || 0 }}</span>
                 <span class="text-xs text-gray-500 ml-1">Warn</span>
               </div>
               <div>
-                <span class="text-2xl font-bold text-red-600 dark:text-red-400">{{ stats?.down_monitors || 0 }}</span>
+                <span class="text-2xl font-bold text-red-600 dark:text-red-400">{{ stats?.monitors_count?.down || 0 }}</span>
                 <span class="text-xs text-gray-500 ml-1">Down</span>
               </div>
             </div>

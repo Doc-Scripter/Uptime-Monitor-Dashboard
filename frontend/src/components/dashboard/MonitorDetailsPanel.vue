@@ -2,10 +2,13 @@
 import { ref, computed } from 'vue'
 import { useMonitorStore } from '@/stores/monitorStore'
 import { storeToRefs } from 'pinia'
+import type { Monitor } from '@/types'
 import UptimeTimeline from '@/components/charts/UptimeTimeline.vue'
 import LatencyChart from '@/components/charts/LatencyChart.vue'
 
 const store = useMonitorStore()
+const { monitors } = storeToRefs(store)
+
 // Mock data for now - in real app would come from store/API
 const mockChartData = Array.from({ length: 24 }, (_, i) => ({
   timestamp: `${i}:00`,
@@ -20,6 +23,34 @@ const tabs = [
   { id: 'logs', label: 'Health Logs' },
   { id: 'network', label: 'Network' },
 ]
+
+// Get the first monitor or create a mock one for demo purposes
+const selectedMonitor = computed<Monitor>(() => {
+  const firstMonitor = monitors.value[0]
+  if (firstMonitor) {
+    return firstMonitor
+  }
+  
+  // Always return a valid Monitor object, never undefined
+  return {
+    id: 0,
+    name: 'Demo Monitor',
+    url: 'https://example.com',
+    type: 'website' as const,
+    interval: 300,
+    is_active: true,
+    status: 'up' as const,
+    uptime_percentage: 99.9,
+    current_latency: 120,
+    tags: [],
+    last_checked_at: new Date().toISOString(),
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+    status_label: 'Up',
+    formatted_latency: '120ms',
+    last_checked_relative: 'just now'
+  }
+})
 </script>
 
 <template>
@@ -46,11 +77,11 @@ const tabs = [
 
     <div class="p-6 flex-1 bg-gray-50/50 dark:bg-gray-800/20">
       <div v-if="activeTab === 'timeline'" class="h-full">
-        <UptimeTimeline :monitor="{}" :data="mockChartData" />
+        <UptimeTimeline :monitor="selectedMonitor" :data="mockChartData" />
       </div>
       
       <div v-else-if="activeTab === 'latency'" class="h-full">
-        <LatencyChart :monitor="{}" :data="mockChartData" />
+        <LatencyChart :monitor="selectedMonitor" :data="mockChartData" />
       </div>
 
       <div v-else class="flex items-center justify-center h-full text-gray-500">
